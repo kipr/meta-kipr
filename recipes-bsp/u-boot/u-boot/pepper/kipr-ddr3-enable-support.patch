@@ -1,0 +1,24 @@
+From 016042db32b4f724a687d38359445eb5de2aa5aa Mon Sep 17 00:00:00 2001
+From: Braden McDorman <bmcdorman@gmail.com>
+Date: Mon, 6 Apr 2015 14:02:12 -0500
+Subject: [PATCH] Added ddr3 support
+
+---
+ include/configs/pepper.h | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/include/configs/pepper.h b/include/configs/pepper.h
+index cc153ab..c1631ee 100644
+--- a/include/configs/pepper.h
++++ b/include/configs/pepper.h
+@@ -96,4 +96,7 @@
+ /* SPL */
+ #define CONFIG_SPL_LDSCRIPT		"$(CPUDIR)/am33xx/u-boot-spl.lds"
+ 
++/* Necessary for KIPR board */
++#define CONFIG_USE_DDR3
++
+ #endif /* __CONFIG_PEPPER_H */
+-- 
+1.9.3 (Apple Git-50)
+
