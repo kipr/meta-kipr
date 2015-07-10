@@ -28,6 +28,11 @@ DEV_TOOLS_INSTALL = " \
   memtester \
   mtd-utils-ubifs \
   u-boot-mkimage \
+  gcc \
+  cmake \
+  make \
+  python-core \
+  python-pyserial \
 "
 
 NETWORK_TOOLS_INSTALL = " \
@@ -36,7 +41,6 @@ NETWORK_TOOLS_INSTALL = " \
   iputils \
   iw \
   ntp \
-  ti-wifi-utils \
   uim \
 "
 
@@ -72,6 +76,13 @@ UTILITIES_INSTALL = " \
   cmake \
   llvm3.3 \
   gcc \
+  gcc-symlinks \
+  ckermit \
+"
+
+HIGHLEVEL_INSTALL = " \
+  qtbase-plugins \
+  lindsey \
 "
  
 IMAGE_INSTALL += " \
@@ -84,6 +95,7 @@ IMAGE_INSTALL += " \
   ${UTILITIES_INSTALL} \
 "
 
+#  ${HIGHLEVEL_INSTALL} \
 # Create a generic 'gumstix' user account, part of the gumstix group,
 # using '/bin/sh' and with a home directory '/home/gumstix' (see
 # /etc/default/useradd).  We set the password to 'gumstix' and add them

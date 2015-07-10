@@ -1,3 +1,2 @@
 Common targets are:
-    gumstix-console-image
-    gumstix-xfce-image
+    kipr-console-image

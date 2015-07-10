@@ -17,9 +17,9 @@ BBLAYERS ?= " \
   ##COREBASE##/meta-gumstix \
   ##COREBASE##/meta-gumstix-extras \
   ##COREBASE##/meta-kipr \
+  ##COREBASE##/meta-qt5 \
   ##COREBASE##/meta-ros \
   ##COREBASE##/meta-ti \
-  ##COREBASE##/meta-virtualization \
   "
 
 BBMASK = "meta-ti/recipes-kernel"
