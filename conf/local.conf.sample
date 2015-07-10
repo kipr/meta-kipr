@@ -18,6 +18,9 @@ PREFERRED_PROVIDER_sshd = "openssh"
 PREFERRED_PROVIDER_jpeg = "libjpeg-turbo"
 PREFERRED_PROVIDER_jpeg-native = "libjpeg-turbo-native"
 
+
+PREFERRED_PROVIDER_virtual/kernel = "linux-kipr"
+
 # Use Gumstix source mirror as default premirror
 SOURCE_MIRROR_URL ?= "http://source-cache.gumstix.org/"
 INHERIT += "own-mirrors"
@@ -249,10 +252,7 @@ DISTRO_FEATURES_BACKFILL_CONSIDERED = "sysvinit"
 
 # Consider pam
 DISTRO_FEATURES_append = " pam"
+DISTRO_FEATURES_append = " opengl"
 
-# Wayland
-DISTRO_FEATURES_append += " wayland"
-CORE_IMAGE_EXTRA_INSTALL += " wayland weston"
 
-# Use lxdm as graphical greeter
-VIRTUAL-RUNTIME_graphical_init_manager = "lxdm"
+PACKAGECONFIG_pn-qtbase = "linuxfb icu gles2"
