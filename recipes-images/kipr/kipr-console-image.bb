@@ -75,6 +75,12 @@ UTILITIES_INSTALL = " \
   git \
   cmake \
   llvm3.3 \
+  binutils \
+  glibc-dev \
+  libgcc-dev \
+  libstdc++-dev \
+  g++ \
+  g++-symlinks \
   gcc \
   gcc-symlinks \
   ckermit \
