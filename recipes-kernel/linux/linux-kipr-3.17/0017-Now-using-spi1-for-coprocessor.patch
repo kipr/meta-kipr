@@ -18,7 +18,7 @@
 +	spibridge@0 {
 +		compatible = "spidev";
 +		reg = <0>;
-+		spi-max-frequency = <1500000>;
++		spi-max-frequency = <16000000>;
  	};
  };
  
