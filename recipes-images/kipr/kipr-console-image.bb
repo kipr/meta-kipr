@@ -70,6 +70,7 @@ UTILITIES_INSTALL = " \
   sudo \
   tar \
   vim \
+  gstreamer \
   wget \
   zip \
   git \
@@ -83,6 +84,7 @@ UTILITIES_INSTALL = " \
   g++-symlinks \
   gcc \
   gcc-symlinks \
+  dhcp-client \
   ckermit \
 "
 
