@@ -1,0 +1,39 @@
+--- a/arch/arm/boot/dts/am335x-pepper.dts
++++ b/arch/arm/boot/dts/am335x-pepper.dts
+@@ -395,11 +395,17 @@
+ 
+                 linux,wakeup;
+         };
++};
++
++&spi1 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&spi1_pins>;
+ 
+-	spibridge@1 {
+-                compatible = "spidev";
+-                reg = <1>;
+-                spi-max-frequency = <1500000>;
++	spibridge@0 {
++		compatible = "spidev";
++		reg = <0>;
++		spi-max-frequency = <1500000>;
+ 	};
+ };
+ 
+@@ -486,6 +492,14 @@
+ 			0x158 (PIN_INPUT_PULLUP | MUX_MODE0) /* spi0_d1.spi0_d1 */
+ 		>;
+ 	};
++	spi1_pins: pinmux_spi1 {
++		pinctrl-single,pins = <
++			0x190 (PIN_INPUT_PULLUP | MUX_MODE3) /* spi1_sclk.spi1_sclk */
++			0x19C (PIN_INPUT_PULLUP | MUX_MODE3) /* spi1_cs0.spi1_cs0 */
++			0x194 (PIN_INPUT_PULLUP | MUX_MODE3) /* spi1_d0.spi1_d0 */
++			0x198 (PIN_INPUT_PULLUP | MUX_MODE3) /* spi1_d1.spi1.d1 */
++		>;
++	};
+ 	ads7846_pins: pinmux_ads7846 {
+ 		pinctrl-single,pins = <
+ 			0x164 (PIN_INPUT | MUX_MODE7)	/* ecap0_in_pwm0_out.gpio0_7 */
