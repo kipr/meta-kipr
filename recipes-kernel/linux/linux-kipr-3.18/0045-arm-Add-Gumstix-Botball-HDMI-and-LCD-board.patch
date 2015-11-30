@@ -1,0 +1,764 @@
+From c8450d75b7763efe9239508be807ed3396ea122e Mon Sep 17 00:00:00 2001
+From: Ash Charles <ashcharles@gmail.com>
+Date: Fri, 20 Nov 2015 15:56:19 -0800
+Subject: [PATCH 45/45] arm: Add Gumstix Botball (HDMI and LCD) board
+
+Add support for the Botball board.  The board can drive either a LCD
+panel or a HDMI output---a device tree is added to support each of
+these display configurations.
+
+Signed-off-by: Ash Charles <ashcharles@gmail.com>
+---
+ arch/arm/boot/dts/Makefile                |   2 +
+ arch/arm/boot/dts/am335x-botball-hdmi.dts |  18 +
+ arch/arm/boot/dts/am335x-botball-lcd.dts  |  18 +
+ arch/arm/boot/dts/am335x-botball.dtsi     | 629 ++++++++++++++++++++++++++++++
+ arch/arm/mach-omap2/pdata-quirks.c        |  26 ++
+ 5 files changed, 693 insertions(+)
+ create mode 100644 arch/arm/boot/dts/am335x-botball-hdmi.dts
+ create mode 100644 arch/arm/boot/dts/am335x-botball-lcd.dts
+ create mode 100644 arch/arm/boot/dts/am335x-botball.dtsi
+
+diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+index 51401fccf12e..1cd01d2c41ca 100644
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -340,6 +340,8 @@ dtb-$(CONFIG_ARCH_OMAP3) += am3517-craneboard.dtb \
+ dtb-$(CONFIG_SOC_AM33XX) += am335x-base0033.dtb \
+ 	am335x-bone.dtb \
+ 	am335x-boneblack.dtb \
++	am335x-botball-hdmi.dtb \
++	am335x-botball-lcd.dtb \
+ 	am335x-evm.dtb \
+ 	am335x-evmsk.dtb \
+ 	am335x-nano.dtb \
+diff --git a/arch/arm/boot/dts/am335x-botball-hdmi.dts b/arch/arm/boot/dts/am335x-botball-hdmi.dts
+new file mode 100644
+index 000000000000..95a0770303dc
+--- /dev/null
++++ b/arch/arm/boot/dts/am335x-botball-hdmi.dts
+@@ -0,0 +1,18 @@
++/*
++ * Copyright (C) 2015 Gumstix, Inc. - https://www.gumstix.com/
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++/dts-v1/;
++#include "am335x-botball.dtsi"
++
++/ {
++	model = "Botball by Gumstix (BRD900000000254v7 HDMI-mode)";
++	compatible = "gumstix,am335x-botball-hdmi", "gumstix,am335x-botball", "ti,am33xx";
++};
++
++&hdmi {
++	status = "okay";
++};
+diff --git a/arch/arm/boot/dts/am335x-botball-lcd.dts b/arch/arm/boot/dts/am335x-botball-lcd.dts
+new file mode 100644
+index 000000000000..def56be1eac4
+--- /dev/null
++++ b/arch/arm/boot/dts/am335x-botball-lcd.dts
+@@ -0,0 +1,18 @@
++/*
++ * Copyright (C) 2015 Gumstix, Inc. - https://www.gumstix.com/
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++/dts-v1/;
++#include "am335x-botball.dtsi"
++
++/ {
++	model = "Botball by Gumstix (BRD900000000254v7 LCD-mode)";
++	compatible = "gumstix,am335x-botball-lcd", "gumstix,am335x-botball", "ti,am33xx";
++};
++
++&panel {
++	status = "okay";
++};
+diff --git a/arch/arm/boot/dts/am335x-botball.dtsi b/arch/arm/boot/dts/am335x-botball.dtsi
+new file mode 100644
+index 000000000000..8e2e3a69088d
+--- /dev/null
++++ b/arch/arm/boot/dts/am335x-botball.dtsi
+@@ -0,0 +1,629 @@
++/*
++ * Copyright (C) 2015 Gumstix, Inc. - https://www.gumstix.com/
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++#include <dt-bindings/input/input.h>
++#include "am33xx.dtsi"
++
++/ {
++	/* Pin-muxes not otherwise associated with a device */
++	pinctrl-names = "default";
++	pinctrl-0 = <&gpio_bridge_pins &m4_gpio_pins>;
++
++	cpus {
++		cpu@0 {
++			cpu0-supply = <&dcdc2_reg>;
++		};
++	};
++
++	memory {
++		device_type = "memory";
++		reg = <0x80000000 0x20000000>; /* 512 MB */
++	};
++
++	buttons: user_buttons {
++		compatible = "gpio-keys";
++		pinctrl-names = "default";
++		pinctrl-0 = <&user_buttons_pins>;
++
++		button@0 {
++			/* S2 */
++			label = "power";
++			linux,code = <KEY_POWER>;
++			gpios = <&gpio1 22 GPIO_ACTIVE_LOW>;
++			gpio-key,wakeup;
++		};
++	};
++
++	leds: user_leds {
++		compatible = "gpio-leds";
++		pinctrl-names = "default";
++		pinctrl-0 = <&user_leds_pins>;
++
++		led@0 {
++			label = "botball:D11:blue";
++			gpios = <&gpio1 20 GPIO_ACTIVE_HIGH>;
++			linux,default-trigger = "none";
++			default-state = "off";
++		};
++
++		led@1 {
++			label = "botball:D2:green";
++			gpios = <&gpio1 21 GPIO_ACTIVE_HIGH>;
++			linux,default-trigger = "none";
++			default-state = "off";
++		};
++	};
++
++	panel: lcd_panel {
++		compatible = "ti,tilcdc,panel";
++		status = "disable";
++		pinctrl-names = "default";
++		pinctrl-0 = <&display_pins &lcd_pins>;
++
++		panel-info {
++			ac-bias = <255>;
++			ac-bias-intrpt = <0>;
++			dma-burst-sz = <16>;
++			bpp = <32>;
++			fdd = <0x80>;
++			sync-edge = <0>;
++			sync-ctrl = <1>;
++			raster-order = <0>;
++			fifo-th = <0>;
++		};
++
++		display-timings {
++			native-mode = <&timing0>;
++			timing0: 480x272 {
++				clock-frequency = <18400000>;
++				hactive = <480>;
++				vactive = <272>;
++				hfront-porch = <8>;
++				hback-porch = <4>;
++				hsync-len = <41>;
++				vfront-porch = <4>;
++				vback-porch = <2>;
++				vsync-len = <10>;
++				hsync-active = <1>;
++				vsync-active = <1>;
++			};
++		};
++	};
++
++	hdmi: hdmi_panel {
++		compatible = "ti,tilcdc,tfp410";
++		i2c = <&i2c1>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&display_pins &hdmi_pins>;
++		status = "disable";
++		powerdn-gpio = <&gpio1 5 GPIO_ACTIVE_LOW>;
++	};
++
++	sound: sound_iface {
++		compatible = "ti,da830-evm-audio";
++
++		ti,model = "AM335x-Botball";
++		ti,audio-codec = <&audio_codec>;
++		ti,mcasp-controller = <&mcasp0>;
++		ti,codec-clock-rate = <12000000>;
++		ti,audio-routing = "Headphone Jack", "HPLOUT";
++	};
++
++	vbat: fixedregulator@0 {
++		compatible = "regulator-fixed";
++		regulator-name = "vbat";
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
++	};
++
++	v3v3c_reg: fixedregulator@1 {
++		compatible = "regulator-fixed";
++		regulator-name = "v3v3c_reg";
++		regulator-boot-on;
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++		vin-supply = <&vbat>;
++	};
++
++	vdd5_reg: fixedregulator@2 {
++		compatible = "regulator-fixed";
++		regulator-name = "vdd5_reg";
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
++		vin-supply = <&vbat>;
++		regulator-always-on;
++	};
++
++	wl18xx_wl_en: fixedregulator@3 {
++		compatible = "regulator-fixed";
++		regulator-name = "regulator-wl18xx-wl-en";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++		vin-supply = <&vbat>;
++		gpio = <&gpio1 30 0>;	/* gpio1_30: WL Enable */
++		/* WLAN card specific delay */
++		startup-delay-us = <70000>;
++		enable-active-high;
++	};
++
++	wl18xx_bt_en: fixedregulator@4 {
++		compatible = "regulator-fixed";
++		regulator-name = "regulator-wl18xx-bt-en";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++		vin-supply = <&vbat>;
++		gpio = <&gpio1 29 0>;	/* gpio1_29: BT Enable */
++		startup-delay-us = <70000>;
++		enable-active-high;
++	};
++};
++
++/* Audio */
++&mcasp0 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&mcasp0_pins>;
++
++	op-mode = <0>;
++	tdm-slots = <2>;
++	serial-dir = <
++		1 2 0 0
++		0 0 0 0
++		0 0 0 0
++		0 0 0 0
++	>;
++	tx-num-evt = <1>;
++	rx-num-evt = <1>;
++};
++
++/* Display */
++&lcdc {
++	status = "okay";
++};
++
++/* I2C Busses */
++&i2c0 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&i2c0_pins>;
++
++	clock-frequency = <400000>;
++
++	tps: tps@24 {
++		reg = <0x24>;
++	};
++
++	eeprom: eeprom@50 {
++		compatible = "at,24c256";
++		reg = <0x50>;
++	};
++
++	audio_codec: tlv320aic3106@1b {
++		compatible = "ti,tlv320aic3106";
++		pinctrl-names = "default";
++		pinctrl-0 = <&audio_pins>;
++
++		reg = <0x1b>;
++		gpio-reset = <&gpio1 16 GPIO_ACTIVE_LOW>;
++
++		AVDD-supply = <&v3v3c_reg>;
++		IOVDD-supply = <&ldo3_reg>;
++		DRVDD-supply = <&v3v3c_reg>;
++		DVDD-supply = <&ldo3_reg>;
++	};
++};
++
++&i2c1 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&i2c1_pins>;
++	clock-frequency = <100000>;
++
++	ext_rtc: ds1340@68 {
++		compatible = "dallas,ds1340";
++		reg = <0x68>;
++	};
++
++	// HDMI DDC on this interface
++};
++
++&i2c2 {
++	/* J1 Header */
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&i2c2_pins>;
++	clock-frequency = <400000>;
++};
++
++/* MMC */
++&mmc1 {
++	/* Bootable SD card slot */
++	status = "okay";
++	vmmc-supply = <&v3v3c_reg>;
++	bus-width = <4>;
++	pinctrl-names = "default";
++	pinctrl-0 = <&mmc0_pins>;
++};
++
++&mmc3 {
++	/* Wifi & Bluetooth on MMC #3 */
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&wireless_pins &mmc2_pins>;
++	vmmc-supply = <&wl18xx_wl_en>;
++	vmmc_aux-supply = <&wl18xx_bt_en>;
++	bus-width = <4>;
++	ti,non-removable;
++	dmas = <&edma 12
++		&edma 13>;
++	dma-names = "tx", "rx";
++	ti,needs-special-hs-handling;
++	cap-power-off-card;
++	keep-power-in-suspend;
++	ti,dual-volt;
++};
++
++&edma {
++	/* Map eDMA MMC #3 Events from Crossbar */
++	ti,edma-xbar-event-map = /bits/ 16 <1 12 2 13>;
++};
++
++
++/* PMIC */
++/include/ "tps65217.dtsi"
++
++&tps {
++	backlight {
++		isel = <1>;
++		fdim = <200>;
++		default-brightness = <80>;
++	};
++
++	regulators {
++		dcdc1_reg: regulator@0 {
++			/* VDD_DDR RAM supply - 1.35V */
++			regulator-name = "vdds_ddr";
++			regulator-always-on;
++		};
++
++		dcdc2_reg: regulator@1 {
++			regulator-name = "vdd_mpu";
++			regulator-min-microvolt = <925000>;
++			regulator-max-microvolt = <1325000>;
++			regulator-always-on;
++		};
++
++		dcdc3_reg: regulator@2 {
++			regulator-name = "vdd_core";
++			regulator-min-microvolt = <925000>;
++			regulator-max-microvolt = <1325000>;
++			regulator-always-on;
++		};
++
++		ldo1_reg: regulator@3 {
++			/* 1.8V always-on supply */
++			regulator-name = "vrtc,vdds";
++			regulator-always-on;
++		};
++
++		ldo2_reg: regulator@4 {
++			/* 3.3V rail - unused */
++			regulator-name = "vldo2";
++			regulator-always-on;
++		};
++
++		ldo3_reg: regulator@5 {
++			regulator-name = "vdd_1v8";
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-always-on;
++		};
++
++		ldo4_reg: regulator@6 {
++			regulator-name = "vdd_3v3";
++			regulator-min-microvolt = <3300000>;
++			regulator-max-microvolt = <3300000>;
++			regulator-always-on;
++		};
++	};
++};
++
++/* SPI Busses */
++&spi0 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&spi0_pins>;
++
++	touch: ads7846@0 {
++		pinctrl-names = "default";
++		pinctrl-0 = <&touch_pins>;
++
++		compatible = "ti,ads7846";
++		vcc-supply = <&v3v3c_reg>;
++
++		reg = <0>;
++		spi-max-frequency = <1500000>;
++
++		interrupt-parent = <&gpio0>;
++		interrupts = <7 0>;
++		pendown-gpio = <&gpio0 7 0>;
++
++		ti,x-min = /bits/ 16 <0x0>;
++		ti,x-max = /bits/ 16 <0x0fff>;
++		ti,y-min = /bits/ 16 <0x0>;
++		ti,y-max = /bits/ 16 <0x0fff>;
++		ti,x-plate-ohms = /bits/ 16 <180>;
++		ti,pressure-max = /bits/ 16 <255>;
++
++		linux,wakeup;
++	};
++};
++
++&spi1 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&spi1_pins>;
++
++	spibridge: spidev@0 {
++		compatible = "spidev";
++		pinctrl-names = "default";
++		pinctrl-0 = <&spibridge_pins>;
++		reg = <0>;
++		spi-max-frequency = <25000000>;
++	};
++};
++
++/* UARTs */
++&uart0 {
++	/* Serial Console on J11 header */
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&uart0_pins>;
++};
++
++&uart1 {
++	/* UART Bridge */
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&uart1_pins>;
++};
++
++&uart5 {
++	/* Wilink8 Bluetooth */
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&uart5_pins>;
++};
++
++/* USB */
++&usb {
++	status = "okay";
++};
++
++&usb_ctrl_mod {
++	status = "okay";
++};
++
++&cppi41dma {
++	status = "okay";
++};
++
++&usb0 {
++	/* USB peripheral on J14 connector */
++	status = "okay";
++	dr_mode = "peripheral";
++};
++
++&usb0_phy {
++	status = "okay";
++};
++
++&usb1 {
++	/* for USB Hub -- K1 connector */
++	status = "okay";
++	dr_mode = "host";
++};
++
++&usb1_phy {
++	status = "okay";
++};
++
++/* Pin-mux */
++&am33xx_pinmux {
++	audio_pins: pinmux_audio {
++		pinctrl-single,pins = <
++			0x40 (PIN_OUTPUT | MUX_MODE7)	/* gpmc_a0.gpio1_16 */
++		>;
++	};
++
++	display_pins: pinmux_display {
++		pinctrl-single,pins = <
++			0xA0 (PIN_OUTPUT | MUX_MODE0)	/* lcd_data0.lcd_data0 */
++			0xA4 (PIN_OUTPUT | MUX_MODE0)	/* lcd_data1.lcd_data1 */
++			0xA8 (PIN_OUTPUT | MUX_MODE0)	/* lcd_data2.lcd_data2 */
++			0xAC (PIN_OUTPUT | MUX_MODE0)	/* lcd_data3.lcd_data3 */
++			0xB0 (PIN_OUTPUT | MUX_MODE0)	/* lcd_data4.lcd_data4 */
++			0xB4 (PIN_OUTPUT | MUX_MODE0)	/* lcd_data5.lcd_data5 */
++			0xB8 (PIN_OUTPUT | MUX_MODE0)	/* lcd_data6.lcd_data6 */
++			0xBC (PIN_OUTPUT | MUX_MODE0)	/* lcd_data7.lcd_data7 */
++			0xC0 (PIN_OUTPUT | MUX_MODE0)	/* lcd_data8.lcd_data8 */
++			0xC4 (PIN_OUTPUT | MUX_MODE0)	/* lcd_data9.lcd_data9 */
++			0xC8 (PIN_OUTPUT | MUX_MODE0)	/* lcd_data10.lcd_data10 */
++			0xCC (PIN_OUTPUT | MUX_MODE0)	/* lcd_data11.lcd_data11 */
++			0xD0 (PIN_OUTPUT | MUX_MODE0)	/* lcd_data12.lcd_data12 */
++			0xD4 (PIN_OUTPUT | MUX_MODE0)	/* lcd_data13.lcd_data13 */
++			0xD8 (PIN_OUTPUT | MUX_MODE0)	/* lcd_data14.lcd_data14 */
++			0xDC (PIN_OUTPUT | MUX_MODE0)	/* lcd_data15.lcd_data15 */
++			0x20 (PIN_OUTPUT | MUX_MODE1)	/* gpmc_ad8.lcd_data23 */
++			0x24 (PIN_OUTPUT | MUX_MODE1)	/* gpmc_ad9.lcd_data22 */
++			0x28 (PIN_OUTPUT | MUX_MODE1)	/* gpmc_ad10.lcd_data21 */
++			0x2C (PIN_OUTPUT | MUX_MODE1)	/* gpmc_ad11.lcd_data20 */
++			0x30 (PIN_OUTPUT | MUX_MODE1)	/* gpmc_ad12.lcd_data19 */
++			0x34 (PIN_OUTPUT | MUX_MODE1)	/* gpmc_ad13.lcd_data18 */
++			0x38 (PIN_OUTPUT | MUX_MODE1)	/* gpmc_ad14.lcd_data17 */
++			0x3C (PIN_OUTPUT | MUX_MODE1)	/* gpmc_ad15.lcd_data16 */
++			0xE0 (PIN_OUTPUT | MUX_MODE0)	/* lcd_vsync.lcd_vsync */
++			0xE4 (PIN_OUTPUT | MUX_MODE0)	/* lcd_hsync.lcd_hsync */
++			0xE8 (PIN_OUTPUT | MUX_MODE0)	/* lcd_pclk.lcd_pclk */
++			0xEC (PIN_OUTPUT | MUX_MODE0)	/* lcd_ac_bias_en.lcd_ac_bias_en */
++		>;
++	};
++
++	gpio_bridge_pins: pinmux_gpio_bridge {
++		pinctrl-single,pins = <
++			0xC (PIN_INPUT | MUX_MODE7)	/* gpmc_ad3.gpio1_3 */
++			0x10 (PIN_INPUT | MUX_MODE7)	/* gpmc_ad4.gpio1_4 */
++		>;
++	};
++
++	hdmi_pins: pinmux_hdmi {
++		pinctrl-single,pins = <
++			0x14 (PIN_OUTPUT_PULLUP | MUX_MODE7)	/* gpmc_ad5.gpio1_5 */
++		>;
++	};
++
++	i2c0_pins: pinmux_i2c0 {
++		pinctrl-single,pins = <
++			0x188 (PIN_INPUT_PULLUP | MUX_MODE0)	/* i2c0_sda.i2c0_sda */
++			0x18C (PIN_INPUT_PULLUP | MUX_MODE0)	/* i2c0_scl.i2c0_scl */
++		>;
++	};
++
++	i2c1_pins: pinmux_i2c1 {
++		pinctrl-single,pins = <
++			0x168 (PIN_INPUT_PULLUP | MUX_MODE3)	/* uart0_ctsn.i2c1_sda */
++			0x16C (PIN_INPUT_PULLUP | MUX_MODE3)	/* uart0_rtsn.i2c1_scl */
++		>;
++	};
++
++	i2c2_pins: pinmux_i2c2 {
++		pinctrl-single,pins = <
++			0x178 (PIN_INPUT_PULLUP | MUX_MODE3)	/* uart1_ctsn.i2c2_sda */
++			0x17C (PIN_INPUT_PULLUP | MUX_MODE3)	/* uart1_rtsn.i2c2_scl */
++		>;
++	};
++
++	lcd_pins: pinmux_lcd {
++		pinctrl-single,pins = <
++			0x6C (PIN_OUTPUT_PULLUP | MUX_MODE7)	/* gpmc_a11.gpio1_27 */
++		>;
++	};
++
++	m4_gpio_pins: pinmux_m4_gpio {
++		pinctrl-single,pins = <
++			0x4 (PIN_INPUT | MUX_MODE7)	/* gpmc_ad1.gpio1_1 - BOOT0 */
++			0x8 (PIN_INPUT | MUX_MODE7)	/* gpmc_ad2.gpio1_2 - STM_RESET */
++		>;
++	};
++
++	mcasp0_pins: pinmux_mcasp0 {
++		pinctrl-single,pins = <
++			0x12C (PIN_INPUT_PULLDOWN | MUX_MODE6)	/* mii1_txclk.mcasp0_aclkx */
++			0x130 (PIN_INPUT_PULLDOWN | MUX_MODE6)	/* mii1_rxclk.mcasp0_fsx */
++			0x134 (PIN_INPUT_PULLDOWN | MUX_MODE6)	/* mii1_rxd3.mcasp0_axr0 */
++			0x1A8 (PIN_INPUT_PULLDOWN | MUX_MODE0)	/* mcasp0_axr1.mcasp0_axr1 */
++		>;
++	};
++
++	mmc0_pins: pinmux_mmc0 {
++		pinctrl-single,pins = <
++			0xF0 (PIN_INPUT_PULLUP | MUX_MODE0)	/* mmc0_dat0.mmc0_dat0 */
++			0xF4 (PIN_INPUT_PULLUP | MUX_MODE0)	/* mmc0_dat1.mmc0_dat1 */
++			0xF8 (PIN_INPUT_PULLUP | MUX_MODE0)	/* mmc0_dat2.mmc0_dat2 */
++			0xFC (PIN_INPUT_PULLUP | MUX_MODE0)	/* mmc0_dat3.mmc0_dat3 */
++			0x100 (PIN_INPUT_PULLUP | MUX_MODE0)	/* mmc0_clk.mmc0_clk */
++			0x104 (PIN_INPUT_PULLUP | MUX_MODE0)	/* mmc0_cmd.mmc0_cmd */
++		>;
++	};
++
++	mmc2_pins: pinmux_mmc2 {
++		pinctrl-single,pins = <
++			0x44 (PIN_INPUT_PULLUP | MUX_MODE3)	/* gpmc_a1.mmc2_dat0 */
++			0x48 (PIN_INPUT_PULLUP | MUX_MODE3)	/* gpmc_a2.mmc2_dat1 */
++			0x4C (PIN_INPUT_PULLUP | MUX_MODE3)	/* gpmc_a3.mmc2_dat2 */
++			0x78 (PIN_INPUT_PULLUP | MUX_MODE3)	/* gpmc_ben1.mmc2_dat3 */
++			0x88 (PIN_INPUT_PULLUP | MUX_MODE3)	/* gpmc_csn3.mmc2_cmd */
++			0x8C (PIN_INPUT_PULLUP | MUX_MODE3)	/* gpmc_clk.mmc1_clk */
++		>;
++	};
++
++	spi0_pins: pinmux_spi0 {
++		pinctrl-single,pins = <
++			0x150 (PIN_INPUT_PULLUP | MUX_MODE0)	/* spi0_sclk.spi0_sclk */
++			0x154 (PIN_INPUT_PULLUP | MUX_MODE0)	/* spi0_d0.spi0_d0 */
++			0x158 (PIN_INPUT_PULLUP | MUX_MODE0)	/* spi0_d1.spi0_d1 */
++		>;
++	};
++
++	spi1_pins: pinmux_spi1 {
++		pinctrl-single,pins = <
++			0x190 (PIN_INPUT_PULLUP | MUX_MODE3)	/* mcasp0_aclkx.spi1_sclk */
++			0x194 (PIN_INPUT_PULLUP | MUX_MODE3)	/* mcasp0_fsx.spi1_d0 */
++			0x198 (PIN_INPUT_PULLUP | MUX_MODE3)	/* mcasp0_axr0.spi1_d1 */
++		>;
++	};
++
++	spibridge_pins: pinmux_spibridge {
++		pinctrl-single,pins = <
++			0x19C (PIN_INPUT_PULLUP | MUX_MODE3)	/* mcasp0_ahclkr.spi1_cs0 */
++			0x1A0 (PIN_INPUT | MUX_MODE7)	/* mcasp0_aclkr.gpio3_18*/
++			0x1AC (PIN_INPUT | MUX_MODE7)	/* mcasp0_ahclkx.gpio3_21 */
++		>;
++	};
++
++	touch_pins: pinmux_touch {
++		pinctrl-single,pins = <
++			0x15C (PIN_INPUT_PULLUP | MUX_MODE0)	/* spi0_cs0.spi0_cs0 */
++			0x164 (PIN_INPUT_PULLUP | MUX_MODE7)	/* ecap0_in_pwm0_out.gpio0_7 */
++		>;
++	};
++
++	uart0_pins: pinmux_uart0 {
++		pinctrl-single,pins = <
++			0x170 (PIN_INPUT_PULLUP | MUX_MODE0)	/* uart0_rxd.uart0_rxd */
++			0x174 (PIN_OUTPUT_PULLDOWN | MUX_MODE0)	/* uart0_txd.uart0_txd */
++		>;
++	};
++
++	uart1_pins: pinmux_uart1 {
++		pinctrl-single,pins = <
++			0x180 (PIN_INPUT_PULLUP | MUX_MODE0)	/* uart1_rxd.uart1_rxd */
++			0x184 (PIN_OUTPUT_PULLDOWN | MUX_MODE0)	/* uart1_txd.uart1_txd */
++		>;
++	};
++
++	uart5_pins: pinmux_uart5 {
++		pinctrl-single,pins = <
++			0x108 (PIN_INPUT_PULLUP | MUX_MODE3)	/* mii1_col.uart5_rxd */
++			0x10C (PIN_INPUT_PULLUP | MUX_MODE5)	/* mii1_crs.uart5_ctsn */
++			0x110 (PIN_OUTPUT_PULLDOWN | MUX_MODE5)	/* mii1_rxerr.uart5_rtsn */
++			0x118 (PIN_OUTPUT_PULLDOWN | MUX_MODE3)	/* mii1_rxdv.uart5_txd */
++		>;
++	};
++
++	user_leds_pins: pinmux_user_leds {
++		pinctrl-single,pins = <		
++			0x50 (PIN_OUTPUT | MUX_MODE7)	/* gpmc_a4.gpio1_20 */
++			0x54 (PIN_OUTPUT | MUX_MODE7)	/* gpmc_a5.gpio1_21 */
++		>;
++	};
++
++	user_buttons_pins: pinmux_user_buttons {
++		pinctrl-single,pins = <
++			0x58 (PIN_INPUT_PULLUP | MUX_MODE7)	/* gpmc_a6.gpio54 */
++		>;
++	};
++
++	wireless_pins: pinmux_wireless {
++		pinctrl-single,pins = <
++			0x7C (PIN_OUTPUT_PULLUP | MUX_MODE7)	/* gpmc_csn0.gpio1_29 - BT Enable*/
++			0x80 (PIN_OUTPUT_PULLUP | MUX_MODE7)	/* gpmc_csn1.gpio1_30 - WLAN Enable */
++			0x84 (PIN_INPUT | MUX_MODE7)	/* gpmc_csn2.gpio1_31 - IRQ*/
++			0x1B0 (PIN_INPUT_PULLDOWN | MUX_MODE7)	/* !xdma_event_intr0.clkout1 - disabled clock */
++		>;
++	};
++};
+diff --git a/arch/arm/mach-omap2/pdata-quirks.c b/arch/arm/mach-omap2/pdata-quirks.c
+index db1e669020cf..7789dafa488a 100644
+--- a/arch/arm/mach-omap2/pdata-quirks.c
++++ b/arch/arm/mach-omap2/pdata-quirks.c
+@@ -366,6 +366,31 @@ static void __init am335x_pepper_legacy_init(void)
+ 	platform_device_register(&pepper_wl18xx_device);
+ 	legacy_init_wl12xx(WL12XX_REFCLOCK_26, 0, 33);
+ }
++
++struct ti_st_plat_data botball_wilink_pdata = {
++        .nshutdown_gpio = 61,
++        .dev_name = "/dev/ttyO5",
++        .flow_cntrl = 1,
++        .baud_rate = 3000000,
++};
++
++static struct platform_device botball_wl18xx_device = {
++        .name           = "kim",
++        .id             = -1,
++        .dev.platform_data = &botball_wilink_pdata,
++};
++
++static struct platform_device botball_btwilink_device = {
++        .name = "btwilink",
++        .id = -1,
++};
++
++static void __init am335x_botball_legacy_init(void)
++{
++	platform_device_register(&botball_btwilink_device);
++	platform_device_register(&botball_wl18xx_device);
++	legacy_init_wl12xx(WL12XX_REFCLOCK_26, 0, 63);
++}
+ #endif
+ 
+ #ifdef CONFIG_SOC_OMAP5
+@@ -483,6 +508,7 @@ static struct pdata_init pdata_quirks[] __initdata = {
+ 	{ "ti,am335x-evmsk", am335x_evmsk_legacy_init, },
+ 	{ "gumstix,am335x-pepper-43r", am335x_pepper_legacy_init, },
+ 	{ "gumstix,am335x-pepper-43c", am335x_pepper_legacy_init, },
++	{ "gumstix,am335x-botball", am335x_botball_legacy_init, },
+ #endif
+ #ifdef CONFIG_SOC_OMAP5
+ 	{ "ti,omap5-uevm", omap5_uevm_legacy_init, },
+-- 
+2.1.4
+
