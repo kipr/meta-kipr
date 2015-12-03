@@ -60,6 +60,7 @@ UTILITIES_INSTALL = " \
   coreutils \
   diffutils \
   findutils \
+  bzip2 \
   gpsd \
   grep \
   gzip \
