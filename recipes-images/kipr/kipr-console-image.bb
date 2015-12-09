@@ -1,9 +1,11 @@
 DESCRIPTION = "A basic console image for Gumstix boards."
 LICENSE = "MIT"
 
-IMAGE_FEATURES += "splash package-management ssh-server-openssh"
+IMAGE_FEATURES += "splash package-management ssh-server-openssh x11-base qt4-pkgs"
 # Uncomment below to include dev tools and packages
 # IMAGE_FEATURES += "tools-sdk dev-pkgs"
+
+REQUIRED_DISTRO_FEATURES = "x11"
 
 IMAGE_LINGUAS = "en-us"
 
@@ -57,6 +59,7 @@ GRAPHICS_LIBS = " \
 "  
 
 UTILITIES_INSTALL = " \
+  php \
   coreutils \
   diffutils \
   findutils \
@@ -70,6 +73,14 @@ UTILITIES_INSTALL = " \
   packagegroup-cli-tools-debug \
   sudo \
   tar \
+  tslib \
+  tslib-conf \
+  tslib-tests \
+  tslib-calibrate \
+  xf86-input-tslib \
+  xrandr \
+  libxrandr \
+  chromium \
   vim \
   gstreamer \
   wget \
