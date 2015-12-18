@@ -91,6 +91,7 @@ SRC_URI = " \
     file://0043-GS4430Y-DTS-changes-for-enabling-WiLink8.patch \
     file://0044-drm-tilcdc-Defer-TFP410-probing-for-i2c.patch \
     file://0045-arm-Add-Gumstix-Botball-HDMI-and-LCD-board.patch \
+    file://0001-tfp410-RGB888-not-RGB565-color-mapping-for-botball.patch \
     file://defconfig \
     file://${BOOT_SPLASH} \
 "
