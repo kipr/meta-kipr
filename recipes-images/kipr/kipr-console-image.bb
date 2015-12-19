@@ -31,6 +31,8 @@ DEV_TOOLS_INSTALL = " \
   mtd-utils-ubifs \
   u-boot-mkimage \
   gcc \
+  boost \
+  boost-dev \
   cmake \
   make \
   python-core \
@@ -50,6 +52,8 @@ MEDIA_TOOLS_INSTALL = " \
   media-ctl \
   raw2rgbpnm \
   v4l-utils \
+  opencv \
+  opencv-samples \
   yavta \
 "
 
@@ -78,6 +82,12 @@ UTILITIES_INSTALL = " \
   tslib-tests \
   tslib-calibrate \
   xf86-input-tslib \
+  nodejs \
+  nodejs-npm \
+  libpng \
+  libpng-dev \  
+  zlib \
+  zlib-dev \
   xrandr \
   libxrandr \
   chromium \
