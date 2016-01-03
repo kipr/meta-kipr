@@ -19,4 +19,10 @@ LICENSE="Apache"
 
 DEPENDS=""
 
+do_install() {
+	make install DESTDIR=${D}
+}
+
 FILES_${PN} += "${bindir}"
+FILES_${PN} += "${libdir}"
+FILES_${PN}-dev += "${includedir}"

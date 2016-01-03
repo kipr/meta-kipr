@@ -1,0 +1,10 @@
+[Unit]
+Description=Robot User Interface
+After=local-fs.target
+
+[Service]
+RemainAfterExit=yes
+ExecStart=/sbin/hwclock -s --rtc=/dev/rtc1
+
+[Install]
+WantedBy=multi-user.target
