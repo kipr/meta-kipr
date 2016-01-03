@@ -111,8 +111,12 @@ UTILITIES_INSTALL = " \
 "
 
 HIGHLEVEL_INSTALL = " \
-  qtbase-plugins \
-  lindsey \
+  chromium \
+  daylite-dev \
+  battlehill \
+  bsonbind \
+  wallaby-utility \
+  libwallaby \
 "
  
 IMAGE_INSTALL += " \
@@ -123,6 +127,7 @@ IMAGE_INSTALL += " \
   ${MEDIA_TOOLS_INSTALL} \
   ${GRAPHICS_LIBS} \
   ${UTILITIES_INSTALL} \
+  ${HIGHLEVEL_INSTALL} \
 "
 
 #  ${HIGHLEVEL_INSTALL} \

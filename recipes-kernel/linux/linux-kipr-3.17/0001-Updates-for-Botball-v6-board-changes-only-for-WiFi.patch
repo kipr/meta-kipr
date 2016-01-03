@@ -1,0 +1,86 @@
+From d2ed7853536fef9d6ff3439f06cc50257034e56e Mon Sep 17 00:00:00 2001
+From: Auto Configured <auto.configured>
+Date: Thu, 19 Nov 2015 16:56:58 -0500
+Subject: [PATCH] Updates for Botball v6 board, changes only for WiFi.
+
+---
+ arch/arm/boot/dts/am335x-pepper-43r.dts | 15 +++++++--------
+ arch/arm/mach-omap2/pdata-quirks.c      |  6 +++---
+ 2 files changed, 10 insertions(+), 11 deletions(-)
+
+diff --git a/arch/arm/boot/dts/am335x-pepper-43r.dts b/arch/arm/boot/dts/am335x-pepper-43r.dts
+index 6b44f95..0d89cfe 100644
+--- a/arch/arm/boot/dts/am335x-pepper-43r.dts
++++ b/arch/arm/boot/dts/am335x-pepper-43r.dts
+@@ -152,9 +152,6 @@
+ 			0x14 (PIN_INPUT | MUX_MODE7)   /* gpmc_ad5.gpio1_5 */
+ 			0x18 (PIN_INPUT | MUX_MODE7)   /* gpmc_ad6.gpio1_6 */
+ 			0x1c (PIN_INPUT | MUX_MODE7)   /* gpmc_ad7.gpio1_7 */
+-			0x7c (PIN_INPUT | MUX_MODE7)   /* gpmc_csn0.gpio1_29 */
+-			0x80 (PIN_INPUT | MUX_MODE7)   /* gpmc_csn1.gpio1_30 */
+-			0x84 (PIN_INPUT | MUX_MODE7)   /* gpmc_csn2.gpio1_31 */
+ 			0x1e4 (PIN_INPUT | MUX_MODE7)   /* emu0.gpio3_7 */
+ 			0x1e8 (PIN_INPUT | MUX_MODE7)   /* emu1.gpio3_8 */
+ 			0x1b0 (PIN_INPUT | MUX_MODE7)   /* xdma_event_intr0.gpio0_19 */
+@@ -368,7 +365,7 @@
+         regulator-min-microvolt = <3300000>;
+         regulator-max-microvolt = <3300000>;
+         vin-supply = <&vbat>;
+-        gpio = <&gpio1 24 0>;   /* gpio1_24: WL Enable */
++        gpio = <&gpio1 30 0>;   /* gpio1_30: WL Enable */
+         /* WLAN card specific delay */
+         startup-delay-us = <70000>;
+         enable-active-high;
+@@ -379,7 +376,7 @@
+         regulator-min-microvolt = <3300000>;
+         regulator-max-microvolt = <3300000>;
+         vin-supply = <&vbat>;
+-        gpio = <&gpio1 0 0>;           /* gpio1_0: BT Enable */
++        gpio = <&gpio1 29 0>;           /* gpio1_29: BT Enable */
+         startup-delay-us = <70000>;
+         enable-active-high;
+ };
+@@ -424,11 +421,13 @@
+ 			0x88 (PIN_INPUT_PULLUP | MUX_MODE3)	/* gpmc_csn3.mmc2_cmd */
+ 			0x8c (PIN_INPUT_PULLUP | MUX_MODE3)	/* gpmc_clk.mmc1_clk */
+ 			/* WLAN Enable */
+-			0x60 (PIN_OUTPUT_PULLUP | MUX_MODE7)	/* gpmc_a8.gpio1_24 */
++			0x80 (PIN_OUTPUT_PULLUP | MUX_MODE7)	/* gpmc_csn1.gpio1_30 */
+ 			/* BT Enable */
+-			0x0 (PIN_OUTPUT_PULLUP | MUX_MODE7)	/* gpmc_ad0.gpio1_0 */
++			0x7c (PIN_OUTPUT_PULLUP | MUX_MODE7)	/* gpmc_csn0.gpio1_29 */
+ 			/* IRQ */
+-			0x4 (PIN_INPUT | MUX_MODE7)	/* gpmc_ad1.gpio1_1 */
++			0x84 (PIN_INPUT | MUX_MODE7)		/* gpmc_csn2.gpio1_31 */
++			/* Disable clkout1 output */
++			0x1B0 (PIN_INPUT | MUX_MODE7)		/* xdma_event_intr0.gpio0_19 */
+ 		>;
+ 	};
+ };
+diff --git a/arch/arm/mach-omap2/pdata-quirks.c b/arch/arm/mach-omap2/pdata-quirks.c
+index 78c6cb4..cdd3ea33 100644
+--- a/arch/arm/mach-omap2/pdata-quirks.c
++++ b/arch/arm/mach-omap2/pdata-quirks.c
+@@ -326,8 +326,8 @@ static void __init am335x_evmsk_legacy_init(void)
+ }
+ 
+ struct ti_st_plat_data pepper_wilink_pdata = {
+-        .nshutdown_gpio = 32,
+-        .dev_name = "/dev/ttyO1",
++        .nshutdown_gpio = 61,
++        .dev_name = "/dev/ttyO5",
+         .flow_cntrl = 1,
+         .baud_rate = 3000000,
+ };
+@@ -347,7 +347,7 @@ static void __init am335x_pepper_legacy_init(void)
+ {
+ 	platform_device_register(&pepper_btwilink_device);
+ 	platform_device_register(&pepper_wl18xx_device);
+-	legacy_init_wl12xx(WL12XX_REFCLOCK_26, 0, 33);
++	legacy_init_wl12xx(WL12XX_REFCLOCK_26, 0, 63);
+ }
+ #endif
+ 
+-- 
+1.9.1
+
