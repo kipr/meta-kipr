@@ -2,9 +2,9 @@ inherit cmake
 inherit native
 
 PN="bsonbind-native"
-PR="15"
+PR="17"
 
-SRCREV = "849e83e0cc4ad516b7808e6457259318ee9e7b02"
+SRCREV = "240fc7b9a1467240ff97d51166a96724acd6d9c0"
 SRC_URI="git://github.com/kipr/bsonbind.git"
 EXTRA_OECMAKE += "-DBITBAKE_BS=1 -DCMAKE_SYSROOT=${D}"
 

@@ -1,10 +1,12 @@
 inherit cmake
 
-PN="bsonbind"
-PR="17"
+PN="boyd"
+PR="1"
 
-SRCREV = "240fc7b9a1467240ff97d51166a96724acd6d9c0"
-SRC_URI="git://github.com/kipr/bsonbind.git"
+SRCREV = "783e8899ded594c30e5085075c144071d3c26da8"
+
+SRC_URI="git://github.com/kipr/boyd.git"
+
 EXTRA_OECMAKE += "-DBITBAKE_BS=1 -DCMAKE_SYSROOT=${D}"
 
 S = "${WORKDIR}/git"
@@ -12,11 +14,10 @@ S = "${WORKDIR}/git"
 LIC_FILES_CHKSUM="file://${S}/LICENSE;md5=4fe869ee987a340198fb0d54c55c47f1"
 LICENSE="GPLv3"
 
-DEPENDS = "libbson"
+DEPENDS="daylite libbson opencv bsonbind-native"
+RDEPENDS_${PN} = "bsonbind"
 
 do_install() {
   make install DESTDIR=${D}
 }
 
-FILES_${PN} += "${bindir}"
-FILES_${PN} += "${includedir}"

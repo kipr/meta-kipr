@@ -1,0 +1,9 @@
+[Unit]
+Description=Daylited
+After=local-fs.target
+
+[Service]
+ExecStart=/usr/bin/daylited
+
+[Install]
+WantedBy=multi-user.target

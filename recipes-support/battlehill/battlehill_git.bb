@@ -1,11 +1,16 @@
 inherit cmake
 
 PN="battlehill"
-PR="14"
+PR="34"
 
-SRCREV = "fc8116d61cda6d89d2f1f4c283815b3c8d26b889"
+SRCREV = "73bacfa828f415c487004d341357c5b03d87e89a"
 
-SRC_URI="git://github.com/kipr/battlehill.git;branch=robot-states"
+SRC_URI="git://github.com/kipr/battlehill.git;branch=master \
+         file://asound.state \
+         file://turn_off_wallaby.wav \
+         file://alsa.service \
+         file://battlehill.service \
+"
 
 EXTRA_OECMAKE += "-DBITBAKE_BS=1 -DCMAKE_SYSROOT=${D}"
 
@@ -18,4 +23,19 @@ DEPENDS="libbattlecreek daylite libbson"
 
 do_install() {
   make install DESTDIR=${D}
+
+  install -d ${D}/usr/share/battlehill
+  install -m 755 ${WORKDIR}/asound.state ${D}/usr/share/battlehill
+
+  install -d ${D}/usr/share/battlehill
+  install -m 755 ${WORKDIR}/turn_off_wallaby.wav ${D}/usr/share/battlehill
+
+  install -d ${D}/lib/systemd/system
+  install -d ${D}/lib/systemd/system/basic.target.wants/
+  install -m 0755 ${WORKDIR}/alsa.service ${D}/lib/systemd/system
+  ln -sf ${WORKDIR}/alsa.service ${D}/lib/systemd/system/basic.target.wants/
+  install -m 0755 ${WORKDIR}/battlehill.service ${D}/lib/systemd/system
+  ln -sf ${WORKDIR}/battlehill.service ${D}/lib/systemd/system/basic.target.wants/
 }
+
+FILES_${PN} += "/usr/share/battlehill /lib/systemd"

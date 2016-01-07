@@ -1,11 +1,11 @@
 inherit cmake
 
 PN="libbattlecreek"
-PR="11"
+PR="15"
 
-SRCREV = "20a3f3a98851aab0d910b54ace56840e712fe014"
+SRCREV = "0b4020499c03578018318403250d3a50b079237c"
 
-SRC_URI="git://github.com/kipr/libbattlecreek.git;branch=add-robot-states"
+SRC_URI="git://github.com/kipr/libbattlecreek.git;branch=master"
 
 EXTRA_OECMAKE += "-DBITBAKE_BS=1 -DCMAKE_SYSROOT=${D}"
 

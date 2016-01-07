@@ -1,0 +1,10 @@
+[Unit]
+Description=Alsa
+After=local-fs.target
+
+[Service]
+RemainAfterExit=yes
+ExecStart=/usr/sbin/alsactl --file /usr/share/battlehill/asound.state restore && /usr/bin/amixer set PCM 100%
+
+[Install]
+WantedBy=multi-user.target
