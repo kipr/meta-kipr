@@ -45,6 +45,8 @@ NETWORK_TOOLS_INSTALL = " \
   iputils \
   iw \
   ntp \
+  ntpdate \
+  openssh-sftp \
   uim \
 "
 
@@ -108,6 +110,7 @@ UTILITIES_INSTALL = " \
   gcc-symlinks \
   dhcp-client \
   ckermit \
+  valgrind \
 "
 
 HIGHLEVEL_INSTALL = " \
@@ -117,6 +120,8 @@ HIGHLEVEL_INSTALL = " \
   bsonbind \
   wallaby-utility \
   libwallaby \
+  harrogate \
+  libaurora \
 "
  
 IMAGE_INSTALL += " \

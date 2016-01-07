@@ -1,20 +1,32 @@
 inherit npm-install
 
 PN="harrogate"
-PR="2"
+PR="28"
 
-SRCREV = "b4edab26148442409eaa45bcb76137f36a1f93c7"
+SRCREV = "5a592794c8c8c0397187719d26dcf68187468060"
 
 SRC_URI="git://github.com/kipr/harrogate.git"
-
-EXTRA_OECMAKE += "-DBITBAKE_BS=1"
 
 S = "${WORKDIR}/git"
 
 LIC_FILES_CHKSUM="file://${S}/LICENSE;md5=84dcc94da3adb52b53ae4fa38fe49e5d"
 LICENSE="GPLv3"
 
-DEPENDS="nodejs"
+DEPENDS="nodejs daylite libbson libaurora"
+
+do_compile() {
+  cd ${S}
+  oe_runnpm install gulp -g
+  export V=1
+  export SYSROOT=/home/kipr/yocto/build/tmp/sysroots/pepper
+  oe_runnpm install
+  gulp compile
+}
+
+do_install() {
+  install -d ${D}/harrogate
+  cp -r ${S}/* ${D}/harrogate
+}
 
 PACKAGES = "${PN}"
-FILES_${PN} = "/usr/harrogate"
+FILES_${PN} = "/harrogate /usr"
