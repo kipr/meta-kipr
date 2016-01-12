@@ -1,6 +1,7 @@
 S = "${WORKDIR}"
 
 SRC_URI = "file://wifi.service \
+           file://wifi_configurator.py \
            file://LICENSE \
 "
 
@@ -11,8 +12,12 @@ do_install() {
   install -d ${D}/lib/systemd/system
   install -m 0755 ${S}/wifi.service ${D}/lib/systemd/system
 
+  install -d ${D}/usr/bin
+  install -m 0755 ${S}/wifi_configurator.py ${D}/usr/bin
+
   install -d ${D}/lib/systemd/system/graphical.target.wants/
   ln -sf ../wifi.service ${D}/lib/systemd/system/graphical.target.wants/
 }
 
 FILES_${PN} = "/lib"
+FILES_${PN} += "/usr"
