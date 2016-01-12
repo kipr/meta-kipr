@@ -1,9 +1,9 @@
 inherit cmake
 
 PN="libbattlecreek"
-PR="15"
+PR="17"
 
-SRCREV = "0b4020499c03578018318403250d3a50b079237c"
+SRCREV = "afb84ca051b894d7aa85da424bee20a0118ba69f"
 
 SRC_URI="git://github.com/kipr/libbattlecreek.git;branch=master"
 

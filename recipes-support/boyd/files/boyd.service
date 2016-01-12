@@ -1,0 +1,9 @@
+[Unit]
+Description=Boyd
+After=local-fs.target daylited.service
+
+[Service]
+ExecStart=/usr/bin/boyd
+
+[Install]
+WantedBy=multi-user.target
