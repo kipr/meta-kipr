@@ -1,13 +1,13 @@
 inherit cmake
 
 PN="daylite"
-PR="43"
+PR="46"
 
-SRCREV = "532b15e132908b49d5490092149a298e753ecc6a"
+SRCREV = "c5e41a60812e7e50b015b8da340855d4cd215366"
 
 SRC_URI="git://github.com/kipr/daylite.git file://daylited.service"
 
-EXTRA_OECMAKE += "-DBITBAKE_BS=1 -DCMAKE_SYSROOT=${D} -Ddebug=ON"
+EXTRA_OECMAKE += "-DBITBAKE_BS=1 -DCMAKE_SYSROOT=${D}"
 
 S = "${WORKDIR}/git"
 

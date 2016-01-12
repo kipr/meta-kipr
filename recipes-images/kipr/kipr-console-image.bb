@@ -122,6 +122,7 @@ HIGHLEVEL_INSTALL = " \
   libwallaby \
   harrogate \
   libaurora \
+  wifi-ap \
 "
  
 IMAGE_INSTALL += " \

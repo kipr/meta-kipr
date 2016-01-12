@@ -1,11 +1,13 @@
 inherit cmake
 
 PN="boyd"
-PR="1"
+PR="24"
 
-SRCREV = "783e8899ded594c30e5085075c144071d3c26da8"
+SRCREV = "5cf454b4e16840fd018238b7e883c08cfa4985fb"
 
-SRC_URI="git://github.com/kipr/boyd.git"
+SRC_URI="git://github.com/kipr/boyd.git;branch=master \
+         file://boyd.service \
+"
 
 EXTRA_OECMAKE += "-DBITBAKE_BS=1 -DCMAKE_SYSROOT=${D}"
 
@@ -19,5 +21,12 @@ RDEPENDS_${PN} = "bsonbind"
 
 do_install() {
   make install DESTDIR=${D}
+
+  install -d ${D}/lib/systemd/system
+  install -d ${D}/lib/systemd/system/basic.target.wants/
+
+  install -m 0755 ${WORKDIR}/boyd.service ${D}/lib/systemd/system
+  ln -sf ${WORKDIR}/boyd.service ${D}/lib/systemd/system/basic.target.wants/
 }
 
+FILES_${PN} += "/lib"

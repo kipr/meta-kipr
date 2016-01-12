@@ -1,9 +1,9 @@
 inherit npm-install
 
 PN="harrogate"
-PR="28"
+PR="40"
 
-SRCREV = "5a592794c8c8c0397187719d26dcf68187468060"
+SRCREV = "74473e3b15e8ae2ff5dd40488574d48ae21212ef"
 
 SRC_URI="git://github.com/kipr/harrogate.git"
 
@@ -30,3 +30,5 @@ do_install() {
 
 PACKAGES = "${PN}"
 FILES_${PN} = "/harrogate /usr"
+
+INSANE_SKIP_${PN} += "staticdev"
