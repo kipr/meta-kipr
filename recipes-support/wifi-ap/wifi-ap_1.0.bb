@@ -10,7 +10,7 @@ LIC_FILES_CHKSUM = "file://${S}/LICENSE;md5=d32239bcb673463ab874e80d47fae504"
 
 do_install() {
   install -d ${D}/lib/systemd/system
-  install -m 0555 ${S}/wifi.service ${D}/lib/systemd/system
+  install -m 0644 ${S}/wifi.service ${D}/lib/systemd/system
 
   install -d ${D}/usr/bin
   install -m 0755 ${S}/wifi_configurator.py ${D}/usr/bin
