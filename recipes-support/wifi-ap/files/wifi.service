@@ -1,0 +1,10 @@
+[Unit]
+Description=wifi
+After=multi-user.target
+
+[Service]
+RemainAfterExit=yes
+ExecStart=/usr/bin/python /usr/bin/wifi_configurator.py
+
+[Install]
+WantedBy=graphical.target
