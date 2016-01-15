@@ -1,0 +1,10 @@
+[Unit]
+Description=Harrogate
+After=local-fs.target daylited.service
+
+[Service]
+ExecStart=/usr/bin/node server.js
+WorkingDirectory=/harrogate
+
+[Install]
+WantedBy=graphical.target
