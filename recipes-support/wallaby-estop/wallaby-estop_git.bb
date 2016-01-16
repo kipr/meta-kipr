@@ -1,7 +1,7 @@
 inherit cmake
 
 PN="wallaby-estop"
-PR="2"
+PR="3"
 
 SRCREV = "c4fba3a470e691c31beedccf53d868f6ed64a278"
 
