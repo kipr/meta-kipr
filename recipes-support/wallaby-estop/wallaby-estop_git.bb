@@ -3,7 +3,7 @@ inherit cmake
 PN="wallaby-estop"
 PR="2"
 
-SRCREV = "927c8394ee3ff1c578585a6ce370c20289e60da5"
+SRCREV = "c4fba3a470e691c31beedccf53d868f6ed64a278"
 
 SRC_URI="git://github.com/kipr/wallaby-estop.git;branch=master \
   file://wallaby-estop.service \
