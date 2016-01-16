@@ -1,0 +1,13 @@
+[Unit]
+Description=chromium
+After=harrogate.service
+
+[Service]
+User=root
+RemainAfterExit=yes
+Environment=DISPLAY=:0
+Environment=CHROME_DEVEL_SANDBOX=/usr/sbin/chrome-devel-sandbox
+ExecStart=/usr/bin/chromium/chrome --user-data-dir=/home/root/chrome_user_data/ --kiosk 192.168.125.1:8888 --single-thread --no-first-run --renderer --disable-ipv6 --disable-extensions --disable-cloud-import --disable-canvas-aa --disable-notifications --noerrdialogs --disable-async-dns --disable-background-networking --in-process-gpu --instant-process --disable-composited-antialiasing --disable-contextual-search --disable-default-apps --disable-demo-mode --disable-device-discovery-notifications --disable-domain-reliability --disable-download-notification --disable-drop-sync-credential --disable-fill-on-account-select --disable-gaia-services --disable-gpu-compositing --disable-gpu-early-init --disable-gpu-program-cache --disable-infobars --disable-logging --disable-login-animations --disable-low-res-tiling --disable-manager-for-sync-signin --disable-media-thread-for-media-playback --disable-multilingual-spellchecker --disable-native-gpu-memory-buffers --disable-network-portal-notification --disable-new-app-list-mixer --disable-new-bookmark-apps --disable-new-channel-switcher-ui --disable-new-profile-management --disable-new-task-manager --disable-new-zip-unpacker --disable-ntp-popular-sites --disable-office-editing-component-extension --disable-overscroll-edge-effect --disable-pepper-3d --disable-permissions-api --disable-smooth-scrolling --disable-speech-api --disable-sync-backup --disable-tab-switcher --disable-threaded-animation --disable-threaded-compositing  --disable-threaded-scrolling --disable-v8-idle-tasks --disable-voice-input --disable-web-resources --disable-zero-copy --disable-webgl --no-default-browser-check --no-managed-user-acknowledgment-check --no-network-profile-warning --no-proxy-server --no-referrers --override-use-gl-with-osmesa-for-tests --reduce-security-for-testing --safebrowsing-disable-auto-update --single-process --touch-noise-filtering --disable-restore-session-state --disable-session-crashed-bubble
+
+[Install]
+WantedBy=graphical.target
