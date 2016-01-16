@@ -1,11 +1,13 @@
 inherit cmake
 
 PN="wallaby-estop"
-PR="1"
+PR="2"
 
 SRCREV = "927c8394ee3ff1c578585a6ce370c20289e60da5"
 
-SRC_URI="git://github.com/kipr/wallaby-estop.git;branch=master"
+SRC_URI="git://github.com/kipr/wallaby-estop.git;branch=master \
+  file://wallaby-estop.service \
+"
 
 EXTRA_OECMAKE += "-DBITBAKE_BS=1 -DCMAKE_SYSROOT=${D}"
 
@@ -18,6 +20,12 @@ DEPENDS=""
 
 do_install() {
   make install DESTDIR=${D}
+
+  install -d ${D}/lib/systemd/system
+  install -m 0644 ${WORKDIR}/wallaby-estop.service ${D}/lib/systemd/system
+
+  install -d ${D}/lib/systemd/system/graphical.target.wants/
+  ln -sf ../wallaby-estop.service ${D}/lib/systemd/system/graphical.target.wants/  
 }
 
-FILES_${PN} += "/usr/local/bin/wallaby-estop"
+FILES_${PN} = "/usr/bin/wallaby-estop /lib/systemd/system"
