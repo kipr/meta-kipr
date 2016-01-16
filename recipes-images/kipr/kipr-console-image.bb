@@ -124,6 +124,7 @@ HIGHLEVEL_INSTALL = " \
   harrogate \
   libaurora \
   wifi-ap \
+  botball-versions \
 "
  
 IMAGE_INSTALL += " \
