@@ -1,9 +1,9 @@
 inherit cmake
 
 PN="wallaby-estop"
-PR="3"
+PR="4"
 
-SRCREV = "c4fba3a470e691c31beedccf53d868f6ed64a278"
+SRCREV = "d0f2cc193219ede5dc1c4b477a17383b9362f803"
 
 SRC_URI="git://github.com/kipr/wallaby-estop.git;branch=master \
   file://wallaby-estop.service \
