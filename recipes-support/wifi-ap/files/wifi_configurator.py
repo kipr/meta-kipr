@@ -104,3 +104,10 @@ os.system('hostapd /etc/hostapd_wallaby.conf &')
 
 time.sleep(10)
 os.system('wall -n \"Wallaby Name: ' + wallaby_id + '-wallaby\nPassword: ' + hash_id + '\"')
+
+#start DHCP
+os.system('/usr/sbin/udhcpd /etc/udhcpd.conf')
+
+#alert user via sound
+os.system('/usr/bin/amixer set PCM 100%')
+os.system('aplay /usr/share/battlehill/welcome.wav')
