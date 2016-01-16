@@ -1,9 +1,9 @@
 inherit cmake
 
 PN="battlehill"
-PR="52"
+PR="54"
 
-SRCREV = "c18e34b31a0fac3eccac815cd83c3b8d50c0f9cb"
+SRCREV = "fcd2ab3f3b199d95fa978bfc05e15452ede9416d"
 
 SRC_URI="git://github.com/kipr/battlehill.git;branch=master \
          file://asound.state \
