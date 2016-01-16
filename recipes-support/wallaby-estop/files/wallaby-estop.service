@@ -3,7 +3,8 @@ Description=wallaby-estop
 After=local-fs.target
 
 [Service]
-ExecStart=/usr/local/bin/wallaby-estop
+RemainAfterExit=yes
+ExecStart=/usr/bin/wallaby-estop
 
 [Install]
 WantedBy=graphical.target
