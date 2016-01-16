@@ -93,6 +93,7 @@ UTILITIES_INSTALL = " \
   xrandr \
   libxrandr \
   chromium \
+  chromium-service \
   vim \
   gstreamer \
   wget \
