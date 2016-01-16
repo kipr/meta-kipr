@@ -1,11 +1,13 @@
 inherit npm-install
 
 PN="harrogate"
-PR="44"
+PR="45"
 
 SRCREV = "74473e3b15e8ae2ff5dd40488574d48ae21212ef"
 
 SRC_URI="git://github.com/kipr/harrogate.git \
+         file://update_wallaby.sh \
+         file://upgrade_wallaby.sh \
          file://harrogate.service \
 "
 
@@ -28,6 +30,8 @@ do_compile() {
 do_install() {
   install -d ${D}/harrogate
   cp -r ${S}/* ${D}/harrogate
+  install -m 0755 ${WORKDIR}/update_wallaby.sh ${D}/harrogate
+  install -m 0755 ${WORKDIR}/upgrade_wallaby.sh ${D}/harrogate
 
   install -d ${D}/lib/systemd/system
   install -m 0644 ${WORKDIR}/harrogate.service ${D}/lib/systemd/system
