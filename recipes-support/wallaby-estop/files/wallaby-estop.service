@@ -1,0 +1,10 @@
+[Unit]
+Description=wallaby-estop
+After=local-fs.target
+
+[Service]
+RemainAfterExit=yes
+ExecStart=/usr/bin/wallaby-estop
+
+[Install]
+WantedBy=graphical.target
