@@ -9,16 +9,16 @@ mkdir -p /media/usbdisk
 mount /dev/sda1 /media/usbdisk
 
 # Check arguments
-#NARGS_EXPECTED=1
-#if [ $# -ne 1 ];
-#then
-#	echo "Expected $NARGS_EXPECTED argument(s), got $#"
-#	exit
-#fi
+DEFAULT_BIN_PATH=/mnt/kipr-console-image-pepper.tar.bz2
+if [ $# -lt 1 ];
+then
+	echo "Expected upgrade image filepath as an argument, using default $DEFAULT_BIN_PATH"
+	BIN_PATH=$DEFAULT_BIN_PATH
+else
+	BIN_PATH=$1
+fi
 
 # look for expected files
-#BIN_PATH=$1
-BIN_PATH=/media/usbdisk/kipr-console-image-pepper.tar.bz2
 if [ ! -f $BIN_PATH ];
 then
 	echo "Expected upgrade binary file at $BIN_PATH"
