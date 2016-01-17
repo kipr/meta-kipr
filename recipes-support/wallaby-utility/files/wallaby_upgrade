@@ -5,8 +5,8 @@ PART_ROOTFS1=/dev/mmcblk0p2
 PART_ROOTFS2=/dev/mmcblk0p3
 PART_USERFS=/dev/mmcblk0p4
 
-mkdir -p /media/usbdisk
-mount /dev/sda1 /media/usbdisk
+#mkdir -p /media/usbdisk
+#mount /dev/sda1 /media/usbdisk
 
 # Check arguments
 DEFAULT_BIN_PATH=/mnt/kipr-console-image-pepper.tar.bz2

@@ -29,4 +29,4 @@ echo "update script = ${UPDATE_SCRIPT}"
 
 # change directory and run the script
 cd $UPDATE_DIR
-./$UPDATE_SCRIPT
+/bin/bash $UPDATE_DIR/$UPDATE_SCRIPT
