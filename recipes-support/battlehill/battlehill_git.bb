@@ -1,7 +1,7 @@
 inherit cmake
 
 PN="battlehill"
-PR="54"
+PR="55"
 
 SRCREV = "fcd2ab3f3b199d95fa978bfc05e15452ede9416d"
 
@@ -9,7 +9,6 @@ SRC_URI="git://github.com/kipr/battlehill.git;branch=master \
          file://asound.state \
          file://turn_off_wallaby.wav \
          file://alsa.service \
-         file://battlehill.service \
 "
 
 EXTRA_OECMAKE += "-DBITBAKE_BS=1 -DCMAKE_SYSROOT=${D}"
@@ -34,8 +33,6 @@ do_install() {
   install -d ${D}/lib/systemd/system/basic.target.wants/
   install -m 0755 ${WORKDIR}/alsa.service ${D}/lib/systemd/system
   ln -sf ${WORKDIR}/alsa.service ${D}/lib/systemd/system/basic.target.wants/
-  install -m 0755 ${WORKDIR}/battlehill.service ${D}/lib/systemd/system
-  ln -sf ${WORKDIR}/battlehill.service ${D}/lib/systemd/system/basic.target.wants/
 }
 
 FILES_${PN} += "/usr/share/battlehill /lib/systemd"
