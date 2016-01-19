@@ -14,7 +14,7 @@ S = "${WORKDIR}/git"
 LIC_FILES_CHKSUM="file://${S}/LICENSE;md5=7702f203b58979ebbc31bfaeb44f219c"
 LICENSE="GPLv3"
 
-DEPENDS="opencv libbattlecreek bsonbind daylite"
+DEPENDS="opencv"
 
 do_install() {
   make install DESTDIR=${D}
