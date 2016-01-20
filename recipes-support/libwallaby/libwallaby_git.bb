@@ -1,9 +1,9 @@
 inherit cmake
 
 PN="libwallaby"
-PR="57"
+PR="64"
 
-SRCREV = "b6434f30f6a2536781ed6b89442901c0fb21b378"
+SRCREV = "e4d9cc213cd2a14e45a41a71765f11d665ea0e33" 
 
 SRC_URI="git://github.com/kipr/libwallaby.git;branch=master"
 
@@ -14,7 +14,7 @@ S = "${WORKDIR}/git"
 LIC_FILES_CHKSUM="file://${S}/LICENSE;md5=7702f203b58979ebbc31bfaeb44f219c"
 LICENSE="GPLv3"
 
-DEPENDS="opencv libbattlecreek bsonbind daylite"
+DEPENDS="opencv"
 
 do_install() {
   make install DESTDIR=${D}
