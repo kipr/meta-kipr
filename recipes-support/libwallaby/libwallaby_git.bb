@@ -1,9 +1,9 @@
 inherit cmake
 
 PN="libwallaby"
-PR="76"
+PR="82"
 
-SRCREV = "de3d1ce7f0f8b011a0b53711ca63dc3e332b7adf"
+SRCREV = "c56214dd9a305fade517521a8509bc6631cfabf0"
 
 SRC_URI="git://github.com/kipr/libwallaby.git;branch=master"
 
