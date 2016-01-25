@@ -98,6 +98,7 @@ UTILITIES_INSTALL = " \
   wget \
   zip \
   git \
+  subversion \ 
   cmake \
   llvm3.3 \
   binutils \
@@ -121,6 +122,7 @@ HIGHLEVEL_INSTALL = " \
   wallaby-utility \
   libwallaby \
   harrogate \
+  botui \
   libaurora \
   wifi-ap \
   botball-versions \
