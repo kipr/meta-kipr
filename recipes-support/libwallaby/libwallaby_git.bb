@@ -1,11 +1,11 @@
 inherit cmake
 
 PN="libwallaby"
-PR="76"
+PR="84"
 
-SRCREV = "de3d1ce7f0f8b011a0b53711ca63dc3e332b7adf"
+SRCREV = "81d1cef99cdebfa9fb4c0ff4638d6fde59454db3"
 
-SRC_URI="git://github.com/kipr/libwallaby.git;branch=master"
+SRC_URI="git://github.com/kipr/libwallaby.git;branch=battery-calib"
 
 EXTRA_OECMAKE += "-DBITBAKE_BS=1 -DCMAKE_SYSROOT=${D}"
 
