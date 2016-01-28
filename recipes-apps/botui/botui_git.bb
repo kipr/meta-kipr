@@ -2,11 +2,11 @@
 inherit qt4x11 cmake
 
 PN="botui"
-PR="6"
+PR="9"
 
-SRCREV = "d23873728693f13b62c73c0b66787e687ee85db2"
+SRCREV = "731d2e7bcb86f3d2f9f57f37604901091dcc7607"
 
-SRC_URI="git://github.com/kipr/botui.git;branch=libwallaby-new-sensors \
+SRC_URI="git://github.com/kipr/botui.git;branch=wallaby-version9 \
 	file://botui.service \
 "
 
