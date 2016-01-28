@@ -105,6 +105,7 @@ UTILITIES_INSTALL = " \
   glibc-dev \
   libgcc-dev \
   libstdc++-dev \
+  ttf-wqy-zenhei \
   g++ \
   g++-symlinks \
   gcc \

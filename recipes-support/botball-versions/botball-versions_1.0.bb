@@ -1,6 +1,6 @@
 S = "${WORKDIR}"
 
-PR="4"
+PR="5"
 
 SRC_URI = "file://board_fw_version.txt \
            file://LICENSE \
