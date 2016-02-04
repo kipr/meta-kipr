@@ -2,12 +2,14 @@
 inherit qt4x11 cmake
 
 PN="botui"
-PR="12"
+PR="14"
 
-SRCREV = "96c64d561c6968d5c55317aaa6029bff25464029"
+SRCREV = "265be25975fad62600748aaca19cdc476296e652"
 
-SRC_URI="git://github.com/kipr/botui.git;branch=wallaby-version10 \
+SRC_URI="git://github.com/kipr/botui.git;branch=master \
 	file://botui.service \
+	file://default \
+	file://TestConfig.conf \
 "
 
 EXTRA_OECMAKE += "-DBITBAKE_BS=1 -DCMAKE_SYSROOT=${D}"
@@ -22,6 +24,10 @@ DEPENDS="pcompiler libwallaby"
 do_install() {
   make install DESTDIR=${D}
 
+  install -d ${D}/etc/botui/channels
+  install -m 0644 ${WORKDIR}/default ${D}/etc/botui/channels
+  install -m 0644 ${WORKDIR}/TestConfig.conf ${D}/etc/botui/channels
+
   install -d ${D}/lib/systemd/system
   install -m 0644 ${WORKDIR}/botui.service ${D}/lib/systemd/system
 
@@ -29,6 +35,6 @@ do_install() {
   ln -sf ../botui.service ${D}/lib/systemd/system/graphical.target.wants/
 }
 
-FILES_${PN} += "/usr/lib/*.so /usr/local/lib/*.so /lib"
+FILES_${PN} += "/usr/lib/*.so /usr/local/lib/*.so /lib /etc/botui"
 FILES_${PN}-dev = "/usr/include"
 FILES_${PN}-dbg += "/usr/bin/botui/.debug"
