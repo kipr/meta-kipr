@@ -1,0 +1,10 @@
+[Unit]
+Description=eth_usb_config
+After=multi-user.target
+
+[Service]
+RemainAfterExit=yes
+ExecStart=/usr/bin/python /usr/bin/eth_usb_configurator.py
+
+[Install]
+WantedBy=graphical.target

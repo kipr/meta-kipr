@@ -30,7 +30,7 @@ KERNEL_DEVICETREE_pepper = "am335x-pepper.dtb \
 
 # Auto-load a serial+ethernet connection on a USB OTG/peripheral
 # port if available
-KERNEL_MODULE_AUTOLOAD += "g_cdc"
+#KERNEL_MODULE_AUTOLOAD += "g_cdc"
 
 
 LINUX_VERSION = "3.18"
@@ -53,11 +53,9 @@ SRC_URI = " \
     file://0005-omap3isp-Calculate-vpclk_div-for-CSI-2.patch \
     file://0006-omap3isp-DT-support-for-clocks.patch \
     file://0007-omap3isp-Platform-data-could-be-NULL.patch \
-    file://0008-v4l-of-Read-data-lanes-endpoint-property.patch \
     file://0009-omap3isp-Add-support-for-the-Device-Tree.patch \
     file://0010-omap3isp-Add-DT-entry-for-OMAP-3.patch \
     file://0011-dt-bindings-Add-bindings-for-omap3isp.patch \
-    file://0012-v4l-async-Call-subdev-driver-s-register-callback-bef.patch \
     file://0013-omap3isp-Correctly-set-QUERYCAP-capabilities.patch \
     file://0014-omap3isp-Add-missing-ioctls.patch \
     file://0015-omap-overo-Add-Caspa-camera-to-device-tree.patch \
