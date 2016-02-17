@@ -1,11 +1,11 @@
 inherit cmake
 
 PN="libwallaby"
-PR="101"
+PR="107"
 
-SRCREV = "6369eaaa5188849a2f1f305b4fb6d84b73c2b2e9"
+SRCREV = "038ccea3443adc755a3c4fb5a9eae238981623fd"
 
-SRC_URI="git://github.com/kipr/libwallaby.git;branch=update-13"
+SRC_URI="git://github.com/kipr/libwallaby.git;branch=update-14"
 
 EXTRA_OECMAKE += "-DBITBAKE_BS=1 -DCMAKE_SYSROOT=${D}"
 
@@ -14,7 +14,7 @@ S = "${WORKDIR}/git"
 LIC_FILES_CHKSUM="file://${S}/LICENSE;md5=7702f203b58979ebbc31bfaeb44f219c"
 LICENSE="GPLv3"
 
-DEPENDS="opencv"
+DEPENDS="opencv zbar"
 
 do_install() {
   make install DESTDIR=${D}
