@@ -5,7 +5,7 @@ PR="107"
 
 SRCREV = "038ccea3443adc755a3c4fb5a9eae238981623fd"
 
-SRC_URI="git://github.com/kipr/libwallaby.git;branch=update-14"
+SRC_URI="git://github.com/kipr/libwallaby.git;branch=master"
 
 EXTRA_OECMAKE += "-DBITBAKE_BS=1 -DCMAKE_SYSROOT=${D}"
 
