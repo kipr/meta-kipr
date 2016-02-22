@@ -2,9 +2,9 @@
 inherit qt4x11 cmake
 
 PN="botui"
-PR="19"
+PR="22"
 
-SRCREV = "3557a26bb573983a40bba4261a2c342e0e01cee1"
+SRCREV = "2961722ceba1cf9386cfc3d29d46c24afc811091"
 
 SRC_URI="git://github.com/kipr/botui.git;branch=master \
 	file://botui.service \
