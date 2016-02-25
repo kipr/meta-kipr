@@ -2,14 +2,17 @@
 inherit qt4x11 cmake
 
 PN="botui"
-PR="22"
+PR="23"
 
-SRCREV = "2961722ceba1cf9386cfc3d29d46c24afc811091"
+SRCREV = "d0248399653283a44c77562b7c8b0a6c73b70d47"
 
 SRC_URI="git://github.com/kipr/botui.git;branch=master \
 	file://botui.service \
 	file://default \
 	file://TestConfig.conf \
+	file://asound.state \
+	file://turn_off_wallaby.wav \
+	file://alsa.service \
 "
 
 EXTRA_OECMAKE += "-DBITBAKE_BS=1 -DCMAKE_SYSROOT=${D}"
@@ -33,6 +36,17 @@ do_install() {
 
   install -d ${D}/lib/systemd/system/graphical.target.wants/
   ln -sf ../botui.service ${D}/lib/systemd/system/graphical.target.wants/
+
+  install -d ${D}/usr/share/botui
+  install -m 755 ${WORKDIR}/asound.state ${D}/usr/share/botui
+
+  install -d ${D}/usr/share/botui
+  install -m 755 ${WORKDIR}/turn_off_wallaby.wav ${D}/usr/share/botui
+
+  install -d ${D}/lib/systemd/system
+  install -d ${D}/lib/systemd/system/basic.target.wants/
+  install -m 0755 ${WORKDIR}/alsa.service ${D}/lib/systemd/system
+  ln -sf ${WORKDIR}/alsa.service ${D}/lib/systemd/system/basic.target.wants/
 }
 
 FILES_${PN} += "/usr/lib/*.so /usr/local/lib/*.so /lib /etc/botui"
