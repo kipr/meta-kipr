@@ -1,9 +1,0 @@
-[Unit]
-Description=Battlehill
-After=local-fs.target daylited.service
-
-[Service]
-ExecStart=/usr/bin/battlehill
-
-[Install]
-WantedBy=multi-user.target
