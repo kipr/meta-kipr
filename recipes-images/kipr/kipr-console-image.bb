@@ -127,7 +127,6 @@ HIGHLEVEL_INSTALL = " \
   libaurora \
   wifi-ap \
   botball-versions \
-  wallaby-estop \
 "
  
 IMAGE_INSTALL += " \
