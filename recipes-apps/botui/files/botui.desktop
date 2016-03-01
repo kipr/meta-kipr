@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Botui
+Comment=Robot UI for the KIPR Wallaby Robot Controller
+Exec=/usr/local/bin/botui_loop.sh
+Terminal=true
+Type=Application
+StartupNotify=true
+Categories=System;Settings;
