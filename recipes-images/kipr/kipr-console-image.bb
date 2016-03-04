@@ -118,7 +118,6 @@ UTILITIES_INSTALL = " \
 HIGHLEVEL_INSTALL = " \
   chromium \
   daylite-dev \
-  battlehill \
   bsonbind \
   wallaby-utility \
   libwallaby \
