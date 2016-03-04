@@ -118,7 +118,6 @@ UTILITIES_INSTALL = " \
 HIGHLEVEL_INSTALL = " \
   chromium \
   daylite-dev \
-  battlehill \
   bsonbind \
   wallaby-utility \
   libwallaby \
@@ -127,7 +126,6 @@ HIGHLEVEL_INSTALL = " \
   libaurora \
   wifi-ap \
   botball-versions \
-  wallaby-estop \
 "
  
 IMAGE_INSTALL += " \
