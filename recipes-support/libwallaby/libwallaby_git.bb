@@ -1,13 +1,13 @@
 inherit cmake
 
 PN="libwallaby"
-PR="109"
+PR="112"
 
-SRCREV = "737f86d43e6befa63bbc0bc38bbc3c49091d2618"
+SRCREV = "6bff72facb185abda9632a3e211d9157a77d3fc3"
 
-SRC_URI="git://github.com/kipr/libwallaby.git;branch=update-15"
+SRC_URI="git://github.com/kipr/libwallaby.git;branch=update-16"
 
-EXTRA_OECMAKE += "-DBITBAKE_BS=1 -DCMAKE_SYSROOT=${D}"
+EXTRA_OECMAKE += "-DBITBAKE_BS=1 -DCMAKE_SYSROOT=${D} -DBUILD_DOCUMENTATION=OFF"
 
 S = "${WORKDIR}/git"
 
