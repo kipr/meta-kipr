@@ -1,9 +1,9 @@
 inherit cmake
 
 PN="libwallaby"
-PR="112"
+PR="113"
 
-SRCREV = "6bff72facb185abda9632a3e211d9157a77d3fc3"
+SRCREV = "833146ef48f122512ee1bae1f6e38ca675b99ebe"
 
 SRC_URI="git://github.com/kipr/libwallaby.git;branch=update-16"
 
@@ -21,6 +21,6 @@ do_install() {
   chmod u+x ${D}/usr/bin/wallaby/*
 }
 
-FILES_${PN} += "/usr/lib/*.so /usr/bin/wallaby/*_c"
+FILES_${PN} += "/usr/lib/*.so /usr/lib/wallaby.py /usr/bin/wallaby/*_c"
 FILES_${PN}-dev = "/usr/include"
 FILES_${PN}-dbg += "/usr/bin/wallaby/.debug"
