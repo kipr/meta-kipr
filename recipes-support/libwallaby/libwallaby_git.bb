@@ -1,13 +1,13 @@
 inherit cmake
 
 PN="libwallaby"
-PR="109"
+PR="114"
 
-SRCREV = "737f86d43e6befa63bbc0bc38bbc3c49091d2618"
+SRCREV = "a156a0aac05453c133f0c246c097f6531709d462"
 
-SRC_URI="git://github.com/kipr/libwallaby.git;branch=update-15"
+SRC_URI="git://github.com/kipr/libwallaby.git;branch=update-16"
 
-EXTRA_OECMAKE += "-DBITBAKE_BS=1 -DCMAKE_SYSROOT=${D}"
+EXTRA_OECMAKE += "-DBITBAKE_BS=1 -DCMAKE_SYSROOT=${D} -DBUILD_DOCUMENTATION=OFF"
 
 S = "${WORKDIR}/git"
 
@@ -21,6 +21,6 @@ do_install() {
   chmod u+x ${D}/usr/bin/wallaby/*
 }
 
-FILES_${PN} += "/usr/lib/*.so /usr/bin/wallaby/*_c"
+FILES_${PN} += "/usr/lib/*.so /usr/lib/wallaby.py /usr/bin/wallaby/*_c"
 FILES_${PN}-dev = "/usr/include"
 FILES_${PN}-dbg += "/usr/bin/wallaby/.debug"
