@@ -1,9 +1,9 @@
 inherit qt4x11 cmake
 
 PN="botui"
-PR="26"
+PR="29"
 
-SRCREV = "51c537f95f462006bbc02f1bff8d49d535000d6d"
+SRCREV = "76c9b77bbb8e591488a86b23e17e4b9e229ce8a3"
 
 SRC_URI="git://github.com/kipr/botui.git;branch=master \
 	file://botui.desktop \
@@ -49,6 +49,6 @@ do_install() {
   ln -sf ${WORKDIR}/alsa.service ${D}/lib/systemd/system/basic.target.wants/
 }
 
-FILES_${PN} += "/usr/lib/*.so /usr/local/lib/*.so /lib /etc/botui /usr/local/bin /etc/xdg/autostart"
+FILES_${PN} += "/usr/lib/*.so /usr/local/lib/*.so /lib /lib/systemd/system/alsa.service /etc/botui /usr/local/bin /etc/xdg/autostart"
 FILES_${PN}-dev = "/usr/include"
 FILES_${PN}-dbg += "/usr/bin/botui/.debug"
