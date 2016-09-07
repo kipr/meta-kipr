@@ -21,6 +21,7 @@ BBLAYERS ?= " \
   ##COREBASE##/meta-ros \
   ##COREBASE##/meta-ti \
   ##COREBASE##/meta-browser \
+  ##COREBASE##/meta-nodejs \
   "
 
 BBMASK = "meta-ti/recipes-kernel"
