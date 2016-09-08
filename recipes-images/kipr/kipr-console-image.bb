@@ -117,13 +117,10 @@ UTILITIES_INSTALL = " \
 
 HIGHLEVEL_INSTALL = " \
   chromium \
-  daylite-dev \
-  bsonbind \
   wallaby-utility \
   libwallaby \
   harrogate \
   botui \
-  libaurora \
   wifi-ap \
   botball-versions \
 "
