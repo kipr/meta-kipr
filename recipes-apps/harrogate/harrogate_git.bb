@@ -1,9 +1,9 @@
 inherit npm-install
 
 PN="harrogate"
-PR="64"
+PR="74"
 
-SRCREV = "8adbe79cae60faad4ada8f6da0107c10e704d91c"
+SRCREV = "61d88d8d42285a3565c8c52d65e2c831b4f054f0"
 
 SRC_URI="git://github.com/kipr/harrogate.git;branch=master \
          file://update_wallaby.sh \
@@ -16,7 +16,7 @@ S = "${WORKDIR}/git"
 LIC_FILES_CHKSUM="file://${S}/LICENSE;md5=84dcc94da3adb52b53ae4fa38fe49e5d"
 LICENSE="GPLv3"
 
-DEPENDS="nodejs daylite libbson libaurora"
+DEPENDS="nodejs libbson"
 
 do_compile() {
   cd ${S}
