@@ -91,6 +91,7 @@ SRC_URI = " \
     file://0045-arm-Add-Gumstix-Botball-HDMI-and-LCD-board.patch \
     file://0001-tfp410-RGB888-not-RGB565-color-mapping-for-botball.patch \
     file://0046-arm-Make-Switch2-An-Unregistered-GPIO.patch \
+    file://0047-ads78460-multisample.patch \
     file://defconfig \
     file://${BOOT_SPLASH} \
 "

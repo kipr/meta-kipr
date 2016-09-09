@@ -1,0 +1,74 @@
+--- a/drivers/input/touchscreen/ads7846.c
++++ b/drivers/input/touchscreen/ads7846.c
+@@ -315,6 +315,10 @@
+ 	struct ads7846 *ts = dev_get_drvdata(dev);
+ 	struct ser_req *req;
+ 	int status;
++	static int t = 0;
++	t+=1;
++	if( t % 500 == 1) printk(KERN_INFO, "ads7846_read12_ser %d\n", t);
++
+ 
+ 	req = kzalloc(sizeof *req, GFP_KERNEL);
+ 	if (!req)
+@@ -699,6 +703,10 @@
+ 	int action;
+ 	int error;
+ 
++	static int t = 0;
++	t+=1;
++	if( t % 500 == 1) printk(KERN_INFO, "ads7846_read_state %d\n", t);
++
+ 	while (msg_idx < ts->msg_count) {
+ 
+ 		ts->wait_for_sync();
+@@ -981,6 +989,10 @@
+ 	struct ads7846_packet *packet = ts->packet;
+ 	int vref = pdata->keep_vref_on;
+ 
++	static int t = 0;
++	t+=1;
++	if( t % 500 == 1) printk(KERN_INFO, "ads7846_setup_spi_msg %d\n", t);
++
+ 	if (ts->model == 7873) {
+ 		/*
+ 		 * The AD7873 is almost identical to the ADS7846
+@@ -1259,6 +1271,8 @@
+ 	unsigned long irq_flags;
+ 	int err;
+ 
++	dev_info(&spi->dev, "touchscreen probe()\n");
++
+ 	if (!spi->irq) {
+ 		dev_dbg(&spi->dev, "no IRQ?\n");
+ 		return -EINVAL;
+@@ -1316,6 +1330,9 @@
+ 	ts->vref_mv = pdata->vref_mv;
+ 	ts->swap_xy = pdata->swap_xy;
+ 
++
++	dev_info(&spi->dev, "touchscreen filter setup, debounce_max %d\n", pdata->debounce_max);
++
+ 	if (pdata->filter != NULL) {
+ 		if (pdata->filter_init != NULL) {
+ 			err = pdata->filter_init(pdata, &ts->filter_data);
+@@ -1332,6 +1349,9 @@
+ 		ts->debounce_rep = pdata->debounce_rep;
+ 		ts->filter = ads7846_debounce_filter;
+ 		ts->filter_data = ts;
++
++		dev_info(&spi->dev, "touchscreen, debounce max %d tol %d rep %d\n", ts->debounce_max, ts->debounce_tol, ts->debounce_rep);
++		
+ 	} else {
+ 		ts->filter = ads7846_no_filter;
+ 	}
+@@ -1404,7 +1424,8 @@
+ 	if (err)
+ 		goto err_free_irq;
+ 
+-	dev_info(&spi->dev, "touchscreen, irq %d\n", spi->irq);
++	printk(KERN_INFO, "touchscreen printk test\n");
++	dev_info(&spi->dev, "touchscreen [5], irq %d\n", spi->irq);
+ 
+ 	/*
+ 	 * Take a first sample, leaving nPENIRQ active and vREF off; avoid
