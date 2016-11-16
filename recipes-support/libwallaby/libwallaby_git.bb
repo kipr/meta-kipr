@@ -1,11 +1,11 @@
 inherit cmake
 
 PN="libwallaby"
-PR="126"
+PR="129"
 
-SRCREV = "9371129fd1181570d598433aa0bc0b62276b8285"
+SRCREV = "4c2a8e8a793531356534a550e0fe33dc1ef72f85"
 
-SRC_URI="git://github.com/kipr/libwallaby.git;branch=master"
+SRC_URI="git://github.com/kipr/libwallaby.git;branch=opencv-img-grab"
 
 EXTRA_OECMAKE += "-DBITBAKE_BS=1 -DCMAKE_SYSROOT=${D} -DBUILD_DOCUMENTATION=OFF"
 
