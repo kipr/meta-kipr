@@ -1,7 +1,7 @@
 inherit qt4x11 cmake
 
 PN="botui"
-PR="46"
+PR="47"
 
 SRCREV = "a08dab712c7498da57fd57063744508a378d6339"
 
