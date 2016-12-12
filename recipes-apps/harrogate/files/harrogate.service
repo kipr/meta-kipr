@@ -3,6 +3,7 @@ Description=Harrogate
 After=local-fs.target daylited.service
 
 [Service]
+Environment=HOME=/home/root
 ExecStart=/usr/bin/node server.js
 WorkingDirectory=/harrogate
 
