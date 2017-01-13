@@ -71,7 +71,7 @@ else
 fi
 
 
-if grep -Fxq "mmcroot=/dev/mmcblk0p3" $UENV_TXT
+if grep -q "mmcroot=/dev/mmcblk0p3" $UENV_TXT
 then
 	# currently on partition 2
 	NEW_PART=1

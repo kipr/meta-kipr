@@ -10,7 +10,7 @@ SRC_URI = "file://wallaby_upgrade \
            file://reset_coproc.service \
 "
 
-PR = "1.5"
+PR = "1.6"
 
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM="file://${WORKDIR}/LICENSE;md5=4fe869ee987a340198fb0d54c55c47f1"
