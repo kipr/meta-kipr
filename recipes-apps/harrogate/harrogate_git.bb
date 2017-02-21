@@ -1,9 +1,9 @@
 inherit npm-install
 
 PN="harrogate"
-PR="81"
+PR="82"
 
-SRCREV = "a1a7a1431f6d08dead47876f68b88472e9276767"
+SRCREV = "e375a382f72c2857b10836eb4558d6d41e073973"
 
 SRC_URI="git://github.com/kipr/harrogate.git;branch=master \
          file://update_wallaby.sh \
