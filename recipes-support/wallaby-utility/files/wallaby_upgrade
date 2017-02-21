@@ -70,14 +70,17 @@ else
 	echo "Found $UENV2_TXT"
 fi
 
-
-if grep -q "mmcroot=/dev/mmcblk0p3" $UENV_TXT
+BOOTCMD="$(dmesg | grep Kernel\ command\ line | grep -q root=/dev/mmcblk0p2)"
+greprc=$?
+if [[ $greprc -eq 0 ]];
 then
+	# currently on partition 1
+        echo "currently using boot partition 1"
+	NEW_PART=2
+else
 	# currently on partition 2
 	NEW_PART=1
-else
-	# currently on partition 1
-	NEW_PART=2
+        echo "currently using boot partition 2"
 fi
 
 echo "New Partition will be ${NEW_PART}"
